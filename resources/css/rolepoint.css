@@ -1,0 +1,55 @@
+#pagetitle img {
+	position : relative;
+	top:8px;
+}
+
+#search_button {
+	background-color:#09f;
+	padding:3px 20px;
+	color:#FFF;
+	border:#F0F0F0 1px solid;
+	border-radius:4px;
+}
+
+
+#targetLayer{
+	width:100%;
+	text-align:center;
+}
+
+#results_table .oddRow {
+	background: rgba(210, 158, 122, 0.4);
+}
+
+#results_table .evenRow {
+	background: rgba(255, 134, 50, 0.4);
+}
+
+#results_table .titleRow {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+
+#nresults {
+	color:red;
+	text-align: left;
+}
+
+html,
+body {
+	height:100%;
+	background-image: url("../images/diamond_pattern.jpg");
+}
+
+.mainTitle {
+	font-size:40px;
+	display:inline-block;
+}
+
+.mainLayer {
+}
+
+.tStatus {
+	width : 100%;
+}
+

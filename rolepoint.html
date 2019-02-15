@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>RolePoint exercise by Marcos Edo Atienza ....</title>
+		<link rel="stylesheet" href="resources/css/rolepoint.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://malsup.github.com/jquery.form.js"></script>
+
+		<script>
+			function search() {
+
+				var formData= new FormData();
+				var search_string = $('#search_string').val();
+
+				formData.append('search_string', search_string);
+
+				var xhr = $.ajax({
+					xhr: function() {
+						var xhr = new window.XMLHttpRequest();
+						return xhr;
+					},
+					type: 'POST',
+					url:'search.py',
+					data: formData,
+					processData:false,
+					contentType: false,
+					error:function(response){
+						alert("Something went wrong ...");
+					},
+					complete:function(response) {
+						displayResults(response.responseText);
+					}
+				});
+			}
+
+			function displayResults(json) {
+
+				columns = ['Name','City','Email','Company','Country','Job History']
+
+				results = JSON.parse(json);
+
+				// Select table
+				var table = $('#results_table');
+
+				// Make sure table is empty before adding anything
+				table.empty();
+
+				// Add bumber of results
+				$('#nresults').html(results.length + " result(s) found");
+
+				// We don't wwant to do anything if there are no results
+				if (results.length == 0) {
+					return
+				}
+
+				// Add table column titles
+				var row = $("<tr>");
+				for (var i=0; i< columns.length; i++) {
+					row.append($("<th>").addClass('titleRow').text(columns[i]))
+				}
+				table.append(row)
+
+				for (var i = 0; i < results.length; i++) {
+
+					result = results[i]
+
+					// Add classes for even and odd rows
+					if (i % 2 == 0) {
+						row = $("<tr>").addClass('evenRow')
+					} else {
+						row = $("<tr>").addClass('oddRow')
+					}
+
+					// Add a result row
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['name']));
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['city']));
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['email']));
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['company']));
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['country']));
+					row.append($("<td>").addClass('tText').attr('id', 'row_'+i.toString()).text(result['job_history']));
+
+					table.append(row)
+				}
+
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div class="mainLayer">
+			<div id="pagetitle">
+				<img src="resources/images/topete.jpg"/>
+				<h1 class="mainTitle">RolePoint exercise</h1>
+
+			<div id=form_div>
+				<form id="searchForm">
+					<br>
+					<b>Search regexp:</b>
+					<input type="text" id="search_string" value="" hint="Type something ..." />
+					<button id="search_button" type="button" class="button" onclick="search()">Search</button>
+					<br>
+				</form>
+			</div>
+
+		</div>
+
+		<div id=targetLayer>
+			<p id = nresults></p>
+			<table id=results_table></table>
+		</div>
+
+	</body>
+</html>
