@@ -2,14 +2,44 @@
 	<head>
 		<title>RolePoint exercise by Marcos Edo Atienza ....</title>
 		<link rel="stylesheet" href="resources/css/rolepoint.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://malsup.github.com/jquery.form.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<div class="mainLayer">
+			<div id="pagetitle">
+				<img src="resources/images/topete.jpg"/>
+				<h1 class="mainTitle">RolePoint exercise</h1>
+
+			<div id=form_div>
+				<form id="searchForm" action="search.py">
+					<br>
+					<b>Search regexp:</b>
+					<input type="text" id="search_string" value="" hint="Type something ..." autofocus/>
+					<button id="search_button" type="submit" class="button">Search</button>
+					<br>
+				</form>
+			</div>
+
+		</div>
+
+		<div id=targetLayer>
+			<p id = nresults></p>
+			<table id=results_table></table>
+		</div>
 
 		<script>
-			function search() {
+			// this is the id of the form	
+			$("#searchForm").submit(function(e) {
+				// avoid to execute the actual submit of the form
+				e.preventDefault();
 
-				var formData= new FormData();
+				var formData      = new FormData();
 				var search_string = $('#search_string').val();
+				var form          = $(this);
+				var url           = form.attr('action');
 
 				formData.append('search_string', search_string);
 
@@ -19,7 +49,7 @@
 						return xhr;
 					},
 					type: 'POST',
-					url:'search.py',
+					url: url,
 					data: formData,
 					processData:false,
 					contentType: false,
@@ -30,7 +60,7 @@
 						displayResults(response.responseText);
 					}
 				});
-			}
+			});
 
 			function displayResults(json) {
 
@@ -83,31 +113,6 @@
 
 			}
 		</script>
-	</head>
-
-	<body>
-
-		<div class="mainLayer">
-			<div id="pagetitle">
-				<img src="resources/images/topete.jpg"/>
-				<h1 class="mainTitle">RolePoint exercise</h1>
-
-			<div id=form_div>
-				<form id="searchForm">
-					<br>
-					<b>Search regexp:</b>
-					<input type="text" id="search_string" value="" hint="Type something ..." />
-					<button id="search_button" type="button" class="button" onclick="search()">Search</button>
-					<br>
-				</form>
-			</div>
-
-		</div>
-
-		<div id=targetLayer>
-			<p id = nresults></p>
-			<table id=results_table></table>
-		</div>
 
 	</body>
 </html>
